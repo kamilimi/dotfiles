@@ -1,0 +1,73 @@
+#!/usr/bin/env lua
+
+--- Init ---
+
+-- locals
+local desktop_apps_dir = os.getenv("HOME") .. "/.local/share/applications/"
+
+local dest_dir = os.getenv("HOME") .. "/.local/share/webapps/icons/"
+
+-- shorts
+local clear = function() os.execute("clear") end
+local download_icon = function(dest, url)
+  os.execute('curl -L -o ' .. dest .. ' ' .. url)
+end
+
+
+--- Input ---
+
+clear()
+io.write("\n\nEnter web-app name: ")
+local name = io.read()
+
+clear()
+io.write("Name: " .. name)
+io.write("\n\nEnter web-app URL: ")
+local url = io.read()
+
+clear()
+io.write("Name: " .. name .. ", URL: " .. url)
+io.write("\n\n( see https://dashboardicons.com )\n")
+io.write("Enter web-app icon URL: ")
+local icon_url = io.read()
+
+
+--- making summary ---
+
+local file_path = desktop_apps_dir .. name .. ".desktop"
+local icon = dest_dir .. name .. ".png"
+local exec = "brave -app=" .. url
+
+local desktop_entry = ([[
+[Desktop Entry]
+Type=Application
+Name=%s
+Exec=%s
+Icon=%s
+Categories=Utility;
+]]):format(name, exec, icon)
+
+
+--- ensure everything is all right ---
+
+clear()
+
+io.write("file path will be: " .. file_path)
+io.write("\n\nthe content will be: \n" .. desktop_entry)
+io.write("\n\ndo you accept changes[Y/n]: ")
+local accepted = io.read()
+
+if accepted:sub(1,1) == 'n' or accepted:sub(1,1) == 'N' then os.exit() end
+
+
+--- execution ---
+
+os.execute("mkdir -p " .. dest_dir)
+download_icon(icon, icon_url)
+
+os.execute("mkdir -p " .. desktop_apps_dir)
+local f = assert(io.open(file_path, "w"))
+f:write(desktop_entry)
+f:close()
+
+
