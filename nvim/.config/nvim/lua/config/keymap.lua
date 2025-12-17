@@ -15,8 +15,8 @@ map("n", "<leader>x", ":x<CR>")
 map("n", "<leader>X", ":xa<CR>")
 
 -- terminal
-map("n", "<C-t>", ":terminal<CR>i")
-map("t", "<C-t>", "<C-\\><C-n> ")
+map("n", "<C-t>", ":terminal<CR>i") -- make terminal
+map("t", "<C-t>", "<C-\\><C-n> ")   -- exit terminal
 
 -- file manager
 map("n", "<C-e>", ":Explore<CR>")
@@ -28,8 +28,8 @@ map("n", "<C-k>", "<C-w>k")
 map("n", "<C-l>", "<C-w>l")
 
 -- quick window splitting
-map("n", "<C-S-s>", ":vsp<CR>")
-map("n", "<C-s>", ":sp<CR>")
+map("n", "<C-s>", ":vsp<CR>")
+map("n", "<C-S-s>", ":sp<CR>")
 
 -- sessions managment
 local sessions_dir = "~/.config/nvim/sessions/"
