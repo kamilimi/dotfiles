@@ -15,3 +15,6 @@ opt.scrolloff = 5
 
 opt.splitright = true
 opt.splitbelow = true
+
+vim.g.mapleader = " "
+
