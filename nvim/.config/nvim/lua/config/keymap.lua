@@ -35,13 +35,56 @@ map("n", "<C-S-s>", ":sp<CR>")
 -- sessions managment --
 local sessions_dir = "~/.config/nvim/sessions/"
 
+
 map("n", "<C-m>", ":mksession! "..sessions_dir)
 map("n", "<S-m>", ":source "..sessions_dir)
 
 
 --- LSP ---
 
-map(  "n"       , "<C-h>", vim.lsp.buf.hover, {})
-map(  "n"       , "gd"   , vim.lsp.buf.definition, {})
-map({ "n", "v" }, "ca"   , vim.lsp.buf.code_action, {})
+local lsp_buf = vim.lsp.buf
+map("n", "<C-S-h>", lsp_buf.hover, {})
+map("n", "gd"   , lsp_buf.definition, {})
+map({"n", "v"}, "ca"   , lsp_buf.code_action, {})
+
+
+--- CMD ---
+
+local cmp = require "cmp"
+
+map("i", "<C-e>", cmp.abort)
+map("i", "<C-CR>", function() cmp.confirm({select = true}) end)
+
+map("i", "<C-j>", cmp.select_next_item)
+map("i", "<C-k>", cmp.select_prev_item)
+
+-- LuaSnip
+
+local ls = require "luasnip"
+
+map({"i", "s"}, "<C-l>", function() ls.jump( 1) end, {silent = true})
+map({"i", "s"}, "<C-h>", function() ls.jump(-1) end, {silent = true})
+
+
+--- DEBUG/DAP ---
+
+--  local dap = require "dap"
+
+--  map('n', '<F5>' , dap.continue)
+--  map('n', '<F10>', dap.step_over)
+--  map('n', '<F11>', dap.step_into)
+--  map('n', '<F12>', dap.step_out)
+
+--  map("n", "<Leader>b", dap.toggle_breakpoint)
+
+--  map("n", "<Leader>dr", dap.repl.open)
+--  map("n", "<Leader>dl", dap.run_last)
+
+--  local dap_wigets = require "dap.ui.widgets"
+
+--  map({"n", "v"}, "<Leader>dh", dap_wigets.hover)
+--  map({"n", "v"}, "<Leader>dp", dap_wigets.preview)
+
+--  map("n", "<Leader>df", function() dap_wigets.centered_float(dap_wigets.frames) end)
+--  map("n", "<Leader>ds", function() dap_wigets.centered_float(dap_wigets.scopes) end)
 
