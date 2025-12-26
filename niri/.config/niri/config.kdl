@@ -98,6 +98,7 @@ binds {
     Mod+Slash hotkey-overlay-title="Run an Application: bitwarden" { spawn "bitwarden-desktop"; }
     Mod+B hotkey-overlay-title="Run an Application: Brave" { spawn "brave"; }
     Mod+E hotkey-overlay-title="Run an Application: yazi" { spawn "kitty" "-e" "yazi"; }
+    Mod+N hotkey-overlay-title="Run an Application: Neovim" { spawn "kitty" "-e" "nvim"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }

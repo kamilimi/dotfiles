@@ -1,90 +1,77 @@
+-- ! MAP leader is ' ' 
 local map = vim.keymap.set
 
 
---- NVIM ---
+--- ! NVIM ---
 
 -- quick saving --
-map("n", "<leader>w", ":w<CR>")
-map("n", "<leader>W", ":wa<CR>")
+map('n', '<leader>w', ':w<CR>' , { desc = 'save file' })
+map('n', '<leader>W', ':wa<CR>', { desc = 'save all files' })
 
 -- quick quicking --
-map("n", "<leader>q", ":q<CR>")
-map("n", "<leader>Q", ":qa<CR>")
+map('n', '<leader>q', ':q<CR>' , { desc = 'quit file' })
+map('n', '<leader>Q', ':qa<CR>', { desc = 'quit all files' })
 
 -- quick saving and quicking --
-map("n", "<leader>x", ":x<CR>")
-map("n", "<leader>X", ":xa<CR>")
+map('n', '<leader>x', ':x<CR>' , { desc = 'save and quit file' })
+map('n', '<leader>X', ':xa<CR>', { desc = 'save and quit all files' })
 
--- terminal --
-map("n", "<C-t>", ":terminal<CR>i") -- make terminal
-map("t", "<C-t>", "<C-\\><C-n> ")   -- exit terminal
-
--- file manager --
-map("n", "<C-e>", ":Explore<CR>")
 
 -- quick window changing --
-map("n", "<C-h>", "<C-w>h")
-map("n", "<C-j>", "<C-w>j")
-map("n", "<C-k>", "<C-w>k")
-map("n", "<C-l>", "<C-w>l")
+map('n', '<C-h>', '<C-w>h', { desc = 'move focus to window to the left' })
+map('n', '<C-j>', '<C-w>j', { desc = 'move focus to window belove' })
+map('n', '<C-k>', '<C-w>k', { desc = 'move focus to window above' })
+map('n', '<C-l>', '<C-w>l', { desc = 'move focus to window to the right' }) -- WARNING: nertrw overwrites it in it's window
 
 -- quick window splitting --
-map("n", "<C-s>", ":vsp<CR>")
-map("n", "<C-S-s>", ":sp<CR>")
-
--- sessions managment --
-local sessions_dir = "~/.config/nvim/sessions/"
+map('n', '<C-s>', ':vsp<CR>' , { desc = 'spli window |' })
+map('n', '<C-S-s>', ':sp<CR>', { desc = 'spli window -' })
 
 
-map("n", "<C-m>", ":mksession! "..sessions_dir)
-map("n", "<S-m>", ":source "..sessions_dir)
+-- Sessions Managment --
+local sessions_dir = '~/.config/nvim/sessions/'
+
+map('n', '<C-m>', ':mksession! '..sessions_dir, { desc = 'quick save a session' })
+map('n', '<S-m>', ':source '..sessions_dir    , { desc = 'quick run a session'  })
 
 
---- LSP ---
+--- ! PLUGINS ---
 
+-- Nertrw --
+map('n', '<C-e>', ':Explore<CR>', { desc = 'just runs nertrw' })
+
+-- Telescope --
+local builtin = require('telescope.builtin')
+
+map('n', '<leader>t', builtin.find_files, { desc = 'Telescope' })
+
+-- LSP --
 local lsp_buf = vim.lsp.buf
-map("n", "<C-S-h>", lsp_buf.hover, {})
-map("n", "gd"   , lsp_buf.definition, {})
-map({"n", "v"}, "ca"   , lsp_buf.code_action, {})
+map('n',        '<leader>h', lsp_buf.hover      , { desc = 'shows info about hovered obj' })
+map('n',        'gd',        lsp_buf.definition , { desc = 'goes to definition of hovered obj' })
+map({'n', 'v'}, 'ca',        lsp_buf.code_action, { desc = 'proposes action for code' })
 
 
---- CMD ---
+-- CMD --
 
-local cmp = require "cmp"
+local cmp = require 'cmp'
+map('i', '<C-CR>', function() cmp.confirm({select = true}) end,
+  { desc = 'confirms selected snippit' })
 
-map("i", "<C-e>", cmp.abort)
-map("i", "<C-CR>", function() cmp.confirm({select = true}) end)
-
-map("i", "<C-j>", cmp.select_next_item)
-map("i", "<C-k>", cmp.select_prev_item)
-
--- LuaSnip
-
-local ls = require "luasnip"
-
-map({"i", "s"}, "<C-l>", function() ls.jump( 1) end, {silent = true})
-map({"i", "s"}, "<C-h>", function() ls.jump(-1) end, {silent = true})
+map('i', '<C-j>', cmp.select_next_item, { desc = 'selects snippit below' })
+map('i', '<C-k>', cmp.select_prev_item, { desc = 'selects snippit above' })
 
 
---- DEBUG/DAP ---
+-- LuaSnip --
+local ls = require 'luasnip'
 
---  local dap = require "dap"
+map({'i', 's'}, '<C-l>', function() ls.jump( 1) end, {silent = true}, {desc = 'cursor goes to the next snippit section'})
+map({'i', 's'}, '<C-h>', function() ls.jump(-1) end, {silent = true}, {desc = 'cursor goes to the previous snippit section'})
 
---  map('n', '<F5>' , dap.continue)
---  map('n', '<F10>', dap.step_over)
---  map('n', '<F11>', dap.step_into)
---  map('n', '<F12>', dap.step_out)
 
---  map("n", "<Leader>b", dap.toggle_breakpoint)
+-- Floating Terminal --
+local fterm = require 'FTerm'
 
---  map("n", "<Leader>dr", dap.repl.open)
---  map("n", "<Leader>dl", dap.run_last)
-
---  local dap_wigets = require "dap.ui.widgets"
-
---  map({"n", "v"}, "<Leader>dh", dap_wigets.hover)
---  map({"n", "v"}, "<Leader>dp", dap_wigets.preview)
-
---  map("n", "<Leader>df", function() dap_wigets.centered_float(dap_wigets.frames) end)
---  map("n", "<Leader>ds", function() dap_wigets.centered_float(dap_wigets.scopes) end)
+vim.keymap.set('n', '<C-t>', fterm.toggle, { desc = 'opens or shows' })
+vim.keymap.set('t', '<C-t>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', {desc = 'hides terminal'})
 
