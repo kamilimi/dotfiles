@@ -1,0 +1,26 @@
+screenshot-path "~/.screenshots from %Y-%m-%d %H-%M-%S.png"
+
+binds {
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    Mod+Space hotkey-overlay-title="Application Launcher" { 
+        spawn "dms" "ipc" "call" "spotlight" "toggle"; 
+    }
+
+    Mod+Return hotkey-overlay-title="Run: Alacritty"   { spawn "alacritty"; }
+    Mod+Slash hotkey-overlay-title="Run: Bitwarden"   { spawn "bitwarden-desktop"; }
+    Mod+B hotkey-overlay-title="Run: Librewolf"       { spawn "brave";     }
+    Mod+E hotkey-overlay-title="Run: Yazi"            { spawn "kitty" "-e" "yazi"; }
+    Mod+N hotkey-overlay-title="Run: Neovim"          { spawn "kitty" "-e" "nvim"; }
+    Mod+Shift+Escape hotkey-overlay-title="Run: BTop" { spawn "kitty" "-e" "btop"; }
+
+    Mod+Alt+L hotkey-overlay-title="Lock Screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
+    Mod+C hotkey-overlay-title="Clipboard Mng" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
+    Mod+T hotkey-overlay-title="Task Mng" { spawn "dms" "ipc" "call" "processlist" "toggle"; }
+    Mod+Escape hotkey-overlay-title="Power Menu" { spawn "dms" "ipc" "powermenu" "toggle"; }
+
+    Print      { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print  { screenshot-window; }
+}
+

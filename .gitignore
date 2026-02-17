@@ -1,0 +1,6 @@
+web-app-mng/dot-local/share/web-apps/icons/*
+zsh/dot-zsh-plugins/*
+nvim/dot-config/nvim/lazy-lock.json
+nvim/dot-config/nvim/sessions/*
+niri/dot-config/niri/dms/*
+

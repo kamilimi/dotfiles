@@ -1,0 +1,5 @@
+// yeah, there so window rules, but here's an example
+// (remember to remove '/-')
+/-window-rule {
+}
+

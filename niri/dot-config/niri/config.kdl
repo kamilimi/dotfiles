@@ -1,0 +1,24 @@
+prefer-no-csd
+
+//  include "dms/alttab.kdl"
+//  include "dms/colors.kdl"
+//  include "dms/cursor.kdl"
+//  include "dms/layout.kdl"
+//  include "dms/outputs.kdl"
+//  include "dms/wpblur.kdl"
+
+include "hardwere/input.kdl"
+include "hardwere/output.kdl"
+
+include "theme/main.kdl"
+include "theme/window-rules.kdl"
+
+include "binds/wm.kdl"
+include "binds/tools.kdl"
+
+binds {
+    Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { 
+        spawn-sh "pkill orca || exec orca"; 
+    }
+    Ctrl+Alt+Delete { quit; }
+}
