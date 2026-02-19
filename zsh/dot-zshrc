@@ -1,34 +1,52 @@
-# Lines configured by zsh-newuser-install
+# history
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-setopt autocd
-unsetopt beep
-bindkey -v
-
-zstyle :compinstall filename '/home/kamil/.zshrc'
-
-source ~/.zsh-plugins/source.zsh
-
-autoload -Uz compinit && compinit
-
 setopt HIST_IGNORE_ALL_DUPS
 setopt SHARE_HISTORY
 
+# default opts
+setopt autocd
+unsetopt beep
+
+# vi-style editing mode
+bindkey -v
+
+# fix backspace in insert mode
+bindkey -M viins '^?' backward-delete-char
+bindkey -M viins '^H' backward-delete-char
+
+
+# loading plugins
+source ~/.zsh-plugins/source.zsh
+
+
+# prompt
 PROMPT=' %3~ $ '
-
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-
-export XDG_DATA_DIRS="$HOME/.local/share/my-apps/share:$XDG_DATA_DIRS"
-
-export EDITOR="nvim"
-export VISUAL="nvim"
 
 precmd() {
   print
 }
+
+
+# propably cool coloring
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+# added paths
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# home directories
+export XDG_DATA_DIRS="$HOME/.local/share/my-apps/share:$XDG_DATA_DIRS"
+
+# default file editor
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+# auto completion
+autoload -Uz compinit
+compinit
+
+zstyle ':completion:*' menu yes select=2
 
